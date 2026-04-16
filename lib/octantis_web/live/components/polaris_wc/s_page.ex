@@ -95,7 +95,18 @@ defmodule OctantisWeb.Components.PolarisWC.SPage do
 
     Only accepts `ButtonGroup` and `Button` components with a `variant` of `secondary` or `auto`.
     """
+  
+  slot :footer,
+    doc: """
+    Content rendered at the bottom of the page, after main content and the aside.
 
+    Follows the Shopify "footer help" pattern — typically a centered link to
+    documentation or support. Rendered in the default slot but positioned after
+    `:aside` in DOM source order so on mobile it stacks after the aside column.
+
+    See: https://shopify.dev/docs/api/app-home/patterns/compositions/footer-help
+    """
+  
   attr :rest, :global
 
   slot :inner_block
@@ -121,6 +132,9 @@ defmodule OctantisWeb.Components.PolarisWC.SPage do
         {render_slot(button)}
       </.s_button>
       <.aside_as :for={aside <- @aside} slot="aside" {aside}>{render_slot(aside)}</.aside_as>
+      <.s_stack :for={footer <- @footer} align_items="center" padding_block="large" {footer}>
+        {render_slot(footer)}
+      </.s_stack>
     </s-page>
     """
   end
